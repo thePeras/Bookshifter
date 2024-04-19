@@ -24,19 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   );
 
 
-  Future<void> _handleSignIn() async{
-    try{
-      await _googleSignIn.signIn();
-
-      
-      /* final googleAuth = googleAccount?.authentication;
-
-      var httpClient = (await _googleSignIn.authenticatedClient())!; */
-    }
-    catch(error){
-      debugPrint(error.toString());
-    }
-  }
+  Future<GoogleSignInAccount?> _handleSignIn() => _googleSignIn.signIn();
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +58,10 @@ class _LoginPageState extends State<LoginPage> {
             SignInButton(
               Buttons.google,
               text: "Entrar com a conta Google",
-              onPressed: _handleSignIn,
+              onPressed: () async {
+                var user = await _handleSignIn();
+                if(user != null) { debugPrint("aaaa"); }
+              },
             )
           ],
         ),
