@@ -24,13 +24,17 @@ class _LoginPageState extends State<LoginPage> {
   );
 
 
-
   Future<void> _handleSignIn() async{
     try{
       await _googleSignIn.signIn();
-      print("ola");
-    } catch(error){
-      print(error);
+
+      
+      /* final googleAuth = googleAccount?.authentication;
+
+      var httpClient = (await _googleSignIn.authenticatedClient())!; */
+    }
+    catch(error){
+      debugPrint(error.toString());
     }
   }
 

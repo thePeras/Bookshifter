@@ -25,7 +25,6 @@ class _LandingPageState extends State<LandingPage> {
 
 
   void _incrementCounter() async {
-    Navigator.pushNamed(context, "/login");
     setState(() {
       _counter++;
     });
