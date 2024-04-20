@@ -58,10 +58,7 @@ class _LoginPageState extends State<LoginPage> {
             SignInButton(
               Buttons.google,
               text: "Entrar com a conta Google",
-              onPressed: () async {
-                var user = await _handleSignIn();
-                if(user != null) { debugPrint("aaaa"); }
-              },
+              onPressed: _handleSignIn
             )
           ],
         ),
