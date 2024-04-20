@@ -17,20 +17,13 @@ void main() async {
 
   _cameras = await availableCameras();
 
-  String credsString = await rootBundle.loadString('assets/GoogleCreds.json');
-  final creds = auth.ServiceAccountCredentials.fromJson(json.decode(credsString));
-
-  final client =
-      await auth.clientViaServiceAccount(creds, [books.BooksApi.booksScope, vision.VisionApi.cloudPlatformScope]);
-
-  runApp(MyApp(client: client, camera: _cameras.first));
+  runApp(MyApp(camera: _cameras.first));
 }
 
 class MyApp extends StatelessWidget {
-  final dynamic client;
   final CameraDescription camera;
 
-  const MyApp({super.key, required this.client, required this.camera});
+  const MyApp({super.key, required this.camera});
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +35,8 @@ class MyApp extends StatelessWidget {
       ),
       home: const LoginPage(),
       routes: {
-        '/landing': (context) => LandingPage(client: client),
-        '/scanner': (context) => ScannerPage(camera: camera, client: client),
+        '/landing': (context) => LandingPage(),
+        '/scanner': (context) => ScannerPage(camera: camera),
       },
     );
   }

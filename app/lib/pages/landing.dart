@@ -1,27 +1,14 @@
+import 'package:app/api/Api.dart';
 import 'package:flutter/material.dart';
-import 'package:googleapis_auth/auth_io.dart';
-import 'package:googleapis/books/v1.dart' as books;
-
 
 class LandingPage extends StatefulWidget {
-  final AuthClient client;
-
-  const LandingPage({super.key, required this.client});
+  const LandingPage();
 
   @override
   State<LandingPage> createState() => _LandingPageState();
 }
 
 class _LandingPageState extends State<LandingPage> {
-
-  // Example here
-  void getBookShelfs() async {
-    final shelfs = await books.BooksApi(widget.client).mylibrary.bookshelves.list();
-    //for each bookshelfs print its name
-    for (final shelf in shelfs.items!) {
-      print(shelf.title);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +30,8 @@ class _LandingPageState extends State<LandingPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, '/scanner'),
-        //onPressed: () => getBookShelfs(),
+        // onPressed: () => Navigator.pushNamed(context, '/scanner'),
+        onPressed: () async => print(await Api().getBook("great gatsby")),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

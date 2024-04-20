@@ -9,8 +9,7 @@ import 'dart:developer';
 
 class ScannerPage extends StatefulWidget {
   final CameraDescription camera;
-  final AuthClient client;
-  const ScannerPage({super.key, required this.camera, required this.client});
+  const ScannerPage({super.key, required this.camera});
 
   @override
   State<ScannerPage> createState() => _ScannerPageState();
@@ -63,11 +62,6 @@ class _ScannerPageState extends State<ScannerPage> {
           }
         ]
       });
-      final vision.BatchAnnotateImagesResponse result = await vision.VisionApi(widget.client).images.annotate(request);
-
-      for (final response in result.responses!) {
-        print(json.encode(response));
-      }
 
       //Navigator.push(
       //  context,
