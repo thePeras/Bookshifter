@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:googleapis_auth/auth_io.dart' as auth;
-import 'package:googleapis/books/v1.dart' as books;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

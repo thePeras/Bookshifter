@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:app/pages/landing.dart';
 import 'package:app/pages/login.dart';
 import 'package:app/pages/scanner.dart';
@@ -7,9 +6,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
 import 'package:googleapis/books/v1.dart' as books;
-import 'package:googleapis/vision/v1.dart' as vision;
 import 'package:flutter/services.dart';
-
 late List<CameraDescription> _cameras;
 
 void main() async {
@@ -19,9 +16,8 @@ void main() async {
 
   String credsString = await rootBundle.loadString('assets/GoogleCreds.json');
   final creds = auth.ServiceAccountCredentials.fromJson(json.decode(credsString));
-
   final client =
-      await auth.clientViaServiceAccount(creds, [books.BooksApi.booksScope, vision.VisionApi.cloudPlatformScope]);
+      await auth.clientViaServiceAccount(creds, [books.BooksApi.booksScope]);
 
   runApp(MyApp(client: client, camera: _cameras.first));
 }
