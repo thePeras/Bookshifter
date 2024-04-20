@@ -1,5 +1,7 @@
+import 'package:app/models/book.dart';
+
 class BookScan {
-  final String book;
+  final Book book;
   final List<String> texts;
   final Map<String, dynamic> boundingBox;
 

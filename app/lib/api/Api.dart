@@ -3,7 +3,7 @@ import "package:books_finder/books_finder.dart" as books_finder;
 import 'package:app/models/book.dart';
 
 class Api {
-  Future<List<Book>> getBook(String query) async {
+  static Future<List<Book>> getBook(String query) async {
     var bookInfo = await books_finder.queryBooks(
       query,
       maxResults: 3,
