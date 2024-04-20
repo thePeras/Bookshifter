@@ -1,13 +1,9 @@
-import 'dart:convert';
 import 'package:app/pages/bookScanned.dart';
 import 'package:app/pages/landing.dart';
 import 'package:app/pages/login.dart';
 import 'package:app/pages/scanner.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:googleapis_auth/auth_io.dart' as auth;
-import 'package:googleapis/books/v1.dart' as books;
-import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 late List<CameraDescription> _cameras;
 
@@ -36,9 +32,9 @@ class MyApp extends StatelessWidget {
       ),
       home: const LoginPage(),
       routes: {
-        '/landing': (context) => LandingPage(),
+        '/landing': (context) => const LandingPage(),
         '/scanner': (context) => ScannerPage(camera: camera),
-        '/bookscanned': (context) => BookScannedPage(),
+        '/bookscanned': (context) => const BookScannedPage(),
       },
     );
   }

@@ -6,12 +6,8 @@ import 'package:app/model/BookScan.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:app/pages/preview.dart';
-import 'package:flutter/services.dart';
-import 'package:googleapis/androidenterprise/v1.dart';
-import 'package:googleapis_auth/auth_io.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:permission_handler/permission_handler.dart' as permission_handler;
 
 class ScannerPage extends StatefulWidget {
   final CameraDescription camera;
@@ -135,7 +131,7 @@ class _ScannerPageState extends State<ScannerPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       body: Center(
@@ -145,16 +141,16 @@ class _ScannerPageState extends State<ScannerPage> {
             // =========================
             // CLIP CAMERA
             // =========================
-            (controller.value.isInitialized) ? Container(
-              width: _screenWidth,
-              height: _screenWidth * 4 / 3,
+            (controller.value.isInitialized) ? SizedBox(
+              width: screenWidth,
+              height: screenWidth * 4 / 3,
               child: ClipRect(
                 child: OverflowBox(
                   alignment: Alignment.center,
                   child: FittedBox(
                     fit: BoxFit.fitWidth,
-                    child: Container(
-                      width: _screenWidth,
+                    child: SizedBox(
+                      width: screenWidth,
                       child: CameraPreview(controller)
                     )
                   )
@@ -164,8 +160,8 @@ class _ScannerPageState extends State<ScannerPage> {
               onTap: () { },
               child: Container(
                 color: Colors.red,
-                width: _screenWidth,
-                height: _screenWidth * 4 / 3,
+                width: screenWidth,
+                height: screenWidth * 4 / 3,
               )
             ),
             // =========================
@@ -174,7 +170,7 @@ class _ScannerPageState extends State<ScannerPage> {
             // =========================
             Expanded(
               child: Container(
-                margin: EdgeInsets.fromLTRB(0, 24, 0, 24),
+                margin: const EdgeInsets.fromLTRB(0, 24, 0, 24),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

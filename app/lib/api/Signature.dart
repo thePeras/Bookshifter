@@ -118,19 +118,19 @@ class Signature {
   }
 
   static _sign(var key, String msg) {
-    var _msg = utf8.encode(msg);
+    var msg0 = utf8.encode(msg);
 
     var hmacSha256 = Hmac(sha256, key); // HMAC-SHA256
-    var digest = hmacSha256.convert(_msg);
+    var digest = hmacSha256.convert(msg0);
 
     return digest.bytes;
   }
 
   static _getSignatureKey(
       String key, String dateStamp, String regionName, String serviceName) {
-    var _key = utf8.encode('AWS4$key');
+    var key0 = utf8.encode('AWS4$key');
 
-    var kDate = _sign(_key, dateStamp);
+    var kDate = _sign(key0, dateStamp);
 
     var kRegion = _sign(kDate, regionName);
 
@@ -160,10 +160,10 @@ class Signature {
   }*/
 
   static _signHex(var key, String message) {
-    var _msg = utf8.encode(message);
+    var msg = utf8.encode(message);
 
     var hmacSha256 = Hmac(sha256, key); // HMAC-SHA256
-    var digest = hmacSha256.convert(_msg);
+    var digest = hmacSha256.convert(msg);
 
     return digest;
   }
