@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:app/pages/bookScanned.dart';
 import 'package:app/pages/landing.dart';
 import 'package:app/pages/login.dart';
 import 'package:app/pages/scanner.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/landing': (context) => LandingPage(client: client),
         '/scanner': (context) => ScannerPage(camera: camera, client: client),
+        '/bookscanned': (context) => BookScannedPage(client: client),
       },
     );
   }

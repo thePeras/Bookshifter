@@ -7,8 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:app/pages/preview.dart';
 import 'package:flutter/services.dart';
+import 'package:googleapis/androidenterprise/v1.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:permission_handler/permission_handler.dart' as permission_handler;
 
 class ScannerPage extends StatefulWidget {
   final CameraDescription camera;
@@ -129,25 +132,81 @@ class _ScannerPageState extends State<ScannerPage> {
     );
   }
 
+
+
   @override
   Widget build(BuildContext context) {
-    if (!controller.value.isInitialized) {
-      return Container();
-    }
+    final _screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("BookShifter"),
-      ),
       body: Center(
         child: Column(
           children: <Widget>[
-            Expanded(
-              child: CameraPreview(controller),
+            // =========================
+            // =========================
+            // CLIP CAMERA
+            // =========================
+            (controller.value.isInitialized) ? Container(
+              width: _screenWidth,
+              height: _screenWidth * 4 / 3,
+              child: ClipRect(
+                child: OverflowBox(
+                  alignment: Alignment.center,
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Container(
+                      width: _screenWidth,
+                      child: CameraPreview(controller)
+                    )
+                  )
+                )
+              ),
+            ) : GestureDetector(
+              onTap: () { },
+              child: Container(
+                color: Colors.red,
+                width: _screenWidth,
+                height: _screenWidth * 4 / 3,
+              )
             ),
-            ElevatedButton(
-              onPressed: scan,
-              child: const Text('Take Picture'),
+            // =========================
+            // =========================
+            // after camera
+            // =========================
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.fromLTRB(0, 24, 0, 24),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // =======
+                    Text(
+                      "Take a picture of a self\nto scan the books.",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.montserrat(
+                        textStyle: const TextStyle(color: Color(0xFF560FA9), fontWeight: FontWeight.w600, fontSize: 22)
+                      )
+                    ),
+                    // =======
+                    Text(
+                      "Your books will be\ndisplayed here soon ",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.montserrat(
+                        textStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16)
+                      )
+                      ),
+                    // =======
+                    ElevatedButton(
+                      onPressed: scan,
+                      child: const Text('Take Picture'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {Navigator.pushNamed(context, '/bookscanned');},
+                      child: const Text("REMOVE ESTE BOTÃO (TESTE)"),
+                    )
+                  ]
+                ),
+              )
             ),
           ],
         ),
