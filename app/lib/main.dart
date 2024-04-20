@@ -1,10 +1,19 @@
 import 'package:app/pages/landing.dart';
 import 'package:app/pages/login.dart';
+import 'package:app/pages/scanner.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
 import 'package:googleapis/books/v1.dart' as books;
 
+
+late List<CameraDescription> _cameras;
+
 void main() async {
+   WidgetsFlutterBinding.ensureInitialized();
+
+  _cameras = await availableCameras();
+  
   // Hard Coded Login
   final creds = auth.ServiceAccountCredentials.fromJson({
     "type": "service_account",
@@ -25,13 +34,14 @@ void main() async {
   final client =
       await auth.clientViaServiceAccount(creds, [books.BooksApi.booksScope]);
 
-  runApp(MyApp(client: client));
+  runApp(MyApp(client: client, camera: _cameras.first));
 }
 
 class MyApp extends StatelessWidget {
   final dynamic client;
+  final CameraDescription camera;
 
-  const MyApp({super.key, required this.client});
+  const MyApp({super.key, required this.client, required this.camera});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +52,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const LoginPage(),
-      routes: {'/landing': (context) => LandingPage(client: client)},
+      routes: {
+        '/landing': (context) => LandingPage(client: client),
+        '/scanner': (context) => ScannerPage(camera: camera),
+        },
     );
   }
 }

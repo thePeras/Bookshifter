@@ -43,7 +43,7 @@ class _LandingPageState extends State<LandingPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: getBookShelfs,
+        onPressed: () => Navigator.pushNamed(context, '/scanner'),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
