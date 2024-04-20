@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
             SignInButton(
               Buttons.google,
               text: "Entrar com a conta Google",
-              onPressed: () => Navigator.pushNamed(context, '/landing')
+              onPressed: () => Navigator.pushReplacementNamed(context, '/landing')
             )
           ],
         ),
