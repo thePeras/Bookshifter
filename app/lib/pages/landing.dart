@@ -34,7 +34,7 @@ class _LandingPageState extends State<LandingPage> {
       // APPBAR
       // =========================
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(150),
+        preferredSize: const Size.fromHeight(120),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children:<Widget>[

@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:app/api/RekognitionHandler.dart';
 import 'package:app/model/BookScan.dart';
+import 'package:app/models/book.dart';
+import 'package:app/pages/bookScanned.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:app/pages/preview.dart';
@@ -12,6 +14,7 @@ import 'package:googleapis_auth/auth_io.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart' as permission_handler;
+
 
 class ScannerPage extends StatefulWidget {
   final CameraDescription camera;
@@ -196,11 +199,43 @@ class _ScannerPageState extends State<ScannerPage> {
                       ),
                     // =======
                     ElevatedButton(
-                      onPressed: scan,
-                      child: const Text('Take Picture'),
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF560FA9),
+                      ),
+                      child: Text(
+                        'Scan Shelf',
+                        style: GoogleFonts.montserrat(
+                            textStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 22)
+                          )
+                      ),
                     ),
                     ElevatedButton(
-                      onPressed: () {Navigator.pushNamed(context, '/bookscanned');},
+                      onPressed: () { Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BookScannedPage(book: Book(
+                                                      title: 'The Great Gatsby',
+                                                      subtitle: 'A Novel',
+                                                      authors: ['F. Scott Fitzgerald'],
+                                                      publisher: 'Scribner',
+                                                      publishedDate: DateTime(1925, 4, 10),
+                                                      rawPublishedDate: '1925-04-10',
+                                                      description: 'The Great Gatsby is a novel by F. Scott Fitzgerald.',
+                                                      pageCount: 180,
+                                                      categories: ['Fiction', 'Classics'],
+                                                      averageRating: 4.2,
+                                                      ratingsCount: 1000,
+                                                      maturityRating: 'NOT_MATURE',
+                                                      contentVersion: '1.0.0',
+                                                      industryIdentifier: [],
+                                                      imageLinks: {
+                                                        'smallThumbnail': Uri.parse('https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/The_Great_Gatsby_Cover_1925_Retouched.jpg/220px-The_Great_Gatsby_Cover_1925_Retouched.jpg',
+                                                            ),
+                                                        'thumbnail': Uri.parse('https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/The_Great_Gatsby_Cover_1925_Retouched.jpg/220px-The_Great_Gatsby_Cover_1925_Retouched.jpg'),
+                                                      },
+                                                      language: 'en',
+                                                    )))
+                      ); },
                       child: const Text("REMOVE ESTE BOTÃO (TESTE)"),
                     )
                   ]

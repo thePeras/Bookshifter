@@ -83,13 +83,18 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    # SVGs
     - assets/logo-app.svg
+    - assets/arrow-up.svg
+    # JPGs
     - assets/scanner.jpg
-    - assets/GoogleCreds.json
+        # Testar capas na landing
     - assets/A_Ilha_do_Tesouro.jpg
     - assets/A_Malnascida.jpg
     - assets/A_Viagem_do_Elefante.jpg
     - assets/Batalha_Incerta.jpg
+    # misc
+    - assets/GoogleCreds.json
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
