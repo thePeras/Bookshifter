@@ -12,8 +12,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ScannerPage extends StatefulWidget {
   final CameraDescription camera;
-  final AuthClient client;
-  const ScannerPage({super.key, required this.camera, required this.client});
+  const ScannerPage({super.key, required this.camera});
 
   @override
   State<ScannerPage> createState() => _ScannerPageState();

@@ -1,15 +1,10 @@
+import 'package:app/api/Api.dart';
 import 'package:flutter/material.dart';
-import 'package:googleapis_auth/auth_io.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:googleapis/books/v1.dart' as books;
-
 
 class LandingPage extends StatefulWidget {
-  final AuthClient client;
-
-  const LandingPage({super.key, required this.client});
-  
+  const LandingPage();
 
   @override
   State<LandingPage> createState() => _LandingPageState();
@@ -29,15 +24,6 @@ class _LandingPageState extends State<LandingPage> {
     "assets/A_Ilha_do_Tesouro.jpg",
     "assets/A_Ilha_do_Tesouro.jpg"
   ];
-  
-  // Example here
-  void getBookShelfs() async {
-    final shelfs = await books.BooksApi(widget.client).mylibrary.bookshelves.list();
-    //for each bookshelfs print its name
-    for (final shelf in shelfs.items!) {
-      print(shelf.title);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +114,6 @@ class _LandingPageState extends State<LandingPage> {
           ],
         ),
       ),
-    ); 
+    );
   }
 }
