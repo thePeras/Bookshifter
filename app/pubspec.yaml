@@ -51,12 +51,9 @@ dependencies:
   intl: ^0.19.0
   crypto: ^3.0.3
   flutter_dotenv: ^5.1.0
-<<<<<<< HEAD
   permission_handler: ^11.3.1
-=======
   books_finder: ^4.4.0
 
->>>>>>> d926472ea0b9c9a630f09916d139ced13e76ab40
 
 dev_dependencies:
   flutter_test:
