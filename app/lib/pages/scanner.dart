@@ -95,7 +95,7 @@ class _ScannerPageState extends State<ScannerPage> {
           }
         }
 
-        final Book book = (await Api.getBook(bookTexts.join(' '))).first;
+        final Book book = await Api.getBook(bookTexts.join(' '));
         bookTextList.add(BookScan(book, bookTexts, bookBbox));
       }
 

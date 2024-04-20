@@ -1,3 +1,4 @@
+import 'package:app/pages/bookScanned.dart';
 import 'package:app/pages/landing.dart';
 import 'package:app/pages/login.dart';
 import 'package:app/pages/scanner.dart';

@@ -1,4 +1,3 @@
-import "package:app/models/IndustryIdentifier.dart";
 import "package:books_finder/books_finder.dart" as books_finder;
 
 class Book {
