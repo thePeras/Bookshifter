@@ -15,8 +15,7 @@ import 'package:permission_handler/permission_handler.dart' as permission_handle
 
 class ScannerPage extends StatefulWidget {
   final CameraDescription camera;
-  final AuthClient client;
-  const ScannerPage({super.key, required this.camera, required this.client});
+  const ScannerPage({super.key, required this.camera});
 
   @override
   State<ScannerPage> createState() => _ScannerPageState();
