@@ -1,10 +1,10 @@
-import 'package:app/api/Api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
 class LandingPage extends StatefulWidget {
-  const LandingPage();
+  const LandingPage({super.key});
 
   @override
   State<LandingPage> createState() => _LandingPageState();

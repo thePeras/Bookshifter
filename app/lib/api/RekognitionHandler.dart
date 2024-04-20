@@ -1,15 +1,22 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
-
 import 'Signature.dart';
 
 class RekognitionHandler {
-  final String _accessKey, _secretKey, _region;
+  late String _accessKey, _secretKey;
+  final String _region = 'us-west-2';
 
-  RekognitionHandler(this._accessKey, this._secretKey, this._region);
+  RekognitionHandler(){
+    _accessKey = dotenv.env['PUBLIC'] ?? "";
+    _secretKey = dotenv.env['SECRET'] ?? "";
+
+    if (_accessKey == "" || _accessKey == "") {
+      print('Access key not found');
+    }
+  }
 
   Future<String> _rekognitionHttp(String amzTarget, String body) async {
     String endpoint = "https://rekognition.$_region.amazonaws.com/";
@@ -109,97 +116,4 @@ class RekognitionHandler {
     }
   }
 
-  Future<String> detectFaces(File imagefile) async {
-    try {
-      List<int> imageBytes = imagefile.readAsBytesSync();
-      String base64Image = base64Encode(imageBytes);
-      String body =
-          '{"Image":{"Bytes": "$base64Image"}, "Attributes": ["ALL"], "MaxLabels": 7}';
-      // Edited by Mahmoud to add => "Attributes": ["ALL"] because EyesOpen
-      // Label wasn't listed in the JSON file
-      String amzTarget = "RekognitionService.DetectFaces";
-
-      String response = await _rekognitionHttp(amzTarget, body);
-      return response;
-    } catch (e) {
-      print(e);
-      return "{}";
-    }
-
-    /*
-    Output will be in this format
-      {
-         "FaceDetails": [
-            {
-               "AgeRange": {
-                  "High": number,
-                  "Low": number
-               },
-               "Beard": {
-                  "Confidence": number,
-                  "Value": boolean
-               },
-               "BoundingBox": {
-                  "Height": number,
-                  "Left": number,
-                  "Top": number,
-                  "Width": number
-               },
-               "Confidence": number,
-               "Emotions": [
-                  {
-                     "Confidence": number,
-                     "Type": "string"
-                  }
-               ],
-               "Eyeglasses": {
-                  "Confidence": number,
-                  "Value": boolean
-               },
-               "EyesOpen": {
-                  "Confidence": number,
-                  "Value": boolean
-               },
-               "Gender": {
-                  "Confidence": number,
-                  "Value": "string"
-               },
-               "Landmarks": [
-                  {
-                     "Type": "string",
-                     "X": number,
-                     "Y": number
-                  }
-               ],
-               "MouthOpen": {
-                  "Confidence": number,
-                  "Value": boolean
-               },
-               "Mustache": {
-                  "Confidence": number,
-                  "Value": boolean
-               },
-               "Pose": {
-                  "Pitch": number,
-                  "Roll": number,
-                  "Yaw": number
-               },
-               "Quality": {
-                  "Brightness": number,
-                  "Sharpness": number
-               },
-               "Smile": {
-                  "Confidence": number,
-                  "Value": boolean
-               },
-               "Sunglasses": {
-                  "Confidence": number,
-                  "Value": boolean
-               }
-            }
-         ],
-         "OrientationCorrection": "string"
-      }
-    */
-  }
 }

@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const LoginPage(),
       routes: {
-        '/landing': (context) => LandingPage(),
+        '/landing': (context) => const LandingPage(),
         '/scanner': (context) => ScannerPage(camera: camera),
       },
     );
