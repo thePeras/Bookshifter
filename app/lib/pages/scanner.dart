@@ -2,11 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app/api/RekognitionHandler.dart';
+import 'package:app/model/BookScan.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:app/pages/preview.dart';
 import 'package:flutter/services.dart';
 import 'package:googleapis_auth/auth_io.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ScannerPage extends StatefulWidget {
   final CameraDescription camera;
@@ -49,15 +51,21 @@ class _ScannerPageState extends State<ScannerPage> {
     super.dispose();
   }
 
-  Future<void> detectTheFace(String srcImage) async {
+  Future<List<BookScan>> detectBooks(String srcImage) async {
     File sourceImageFile = File(srcImage);
 
-    String credsString = await rootBundle.loadString('assets/env.json');
-    final decodedCreds = json.decode(credsString);
-
-    String accessKey = decodedCreds["public"];
-    String secretKey = decodedCreds["private"];
+    String? accessKey = dotenv.env['PUBLIC'];
+    String? secretKey = dotenv.env['SECRET'];
     String region = 'us-west-2';
+
+    if(accessKey == null){
+      print('Access key not found');
+      return [];
+    }
+    if(secretKey == null){
+      print('Secret key not found');
+      return [];
+    }
 
     RekognitionHandler rekognition =
         RekognitionHandler(accessKey, secretKey, region);
@@ -66,7 +74,7 @@ class _ScannerPageState extends State<ScannerPage> {
     final int bookIndex = books.indexWhere((element) => element['Name'] == 'Book');
     if (bookIndex == -1) {
       print('No books found');
-      return;
+      return [];
     }
 
     final List<dynamic> booksInstances = books[bookIndex]['Instances'];
@@ -75,9 +83,9 @@ class _ScannerPageState extends State<ScannerPage> {
     Future<String> textsArray = rekognition.detectTexts(sourceImageFile);
     final List<dynamic> texts = json.decode(await textsArray)['TextDetections'];
 
-    List<BookText> createBookTextList(List booksData,
+    List<BookScan> createBookTextList(List booksData,
         List textsData) {
-      List<BookText> bookTextList = [];
+      List<BookScan> bookTextList = [];
 
       for (var bookInfo in booksData) {
         List<String> bookTexts = [];
@@ -98,25 +106,25 @@ class _ScannerPageState extends State<ScannerPage> {
           }
         }
 
-        bookTextList.add(BookText("", bookTexts, bookBbox));
+        //TODO: search the book by its texts
+        bookTextList.add(BookScan("", bookTexts, bookBbox));
       }
 
       return bookTextList;
     }
 
-    List<BookText> result = createBookTextList(booksInstances, texts);
-    print(result);
+    return createBookTextList(booksInstances, texts);
   }
 
   void scan() async {
     final XFile image = await controller.takePicture();
-    await detectTheFace(image.path);
+    List<BookScan> scannedBooks = await detectBooks(image.path);
 
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) =>
-            PreviewScreen(imagePath: image.path, books: [], texts: []),
+            PreviewScreen(imagePath: image.path, scannedBooks: scannedBooks),
       ),
     );
   }
@@ -148,23 +156,3 @@ class _ScannerPageState extends State<ScannerPage> {
   }
 }
 
-class BookText {
-  final String book;
-  final List<String> texts;
-  final Map<String, dynamic> boundingBox;
-
-  BookText(this.book, this.texts, this.boundingBox);
-
-  @override
-  String toString() {
-    return 'Book: $book, Texts: $texts, BoundingBox: $boundingBox';
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'book': book,
-      'texts': texts,
-      'boundingBox': boundingBox,
-    };
-  }
-}

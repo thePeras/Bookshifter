@@ -50,6 +50,7 @@ dependencies:
   http: ^1.2.1
   intl: ^0.19.0
   crypto: ^3.0.3
+  flutter_dotenv: ^5.1.0
 
 dev_dependencies:
   flutter_test:
@@ -81,6 +82,7 @@ flutter:
   assets:
     - assets/logo-app.svg
     - assets/GoogleCreds.json
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
