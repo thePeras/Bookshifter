@@ -84,7 +84,10 @@ class _LandingPageState extends State<LandingPage> {
       body: Center(
         child: Column(
           children: <Widget>[
-            const Image(image: AssetImage("assets/scanner.jpg")),
+            GestureDetector(
+              onTap: () => { Navigator.pushNamed(context, '/scanner') },
+              child: const Image(image: AssetImage("assets/scanner.jpg"))
+            ),
             // =========================
             // =========================
             // LISTA LIVROS
@@ -124,12 +127,6 @@ class _LandingPageState extends State<LandingPage> {
             // =========================
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, '/scanner'),
-        //onPressed: () => getBookShelfs(),
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     ); 
   }
