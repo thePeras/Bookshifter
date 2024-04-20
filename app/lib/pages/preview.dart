@@ -1,3 +1,4 @@
+import 'package:app/Widgets/bookCarousel.dart';
 import 'package:app/model/BookScan.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -6,44 +7,59 @@ class PreviewScreen extends StatelessWidget {
   final String imagePath;
   final List<BookScan> scannedBooks;
 
-  const PreviewScreen({super.key, required this.imagePath, required this.scannedBooks});
+  const PreviewScreen(
+      {super.key, required this.imagePath, required this.scannedBooks});
 
   @override
   Widget build(BuildContext context) {
+    final _screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-        appBar: AppBar(title: const Text('Result')),
-        body: Column(
-          children: [
-            Stack(
-              children: [
-                Image.file(File(imagePath)),
-                GestureDetector(
-                  onTapUp: (TapUpDetails details) {
-                    print("Touch detected at ${details.localPosition}");
-                  },
-                  child: CustomPaint(
-                    painter: BoundingBoxPainter(scannedBooks),
-                  ),
-                ),
-              ],
-              
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: scannedBooks.length,
-                itemBuilder: (context, index) {
-                  final BookScan scannedBook = scannedBooks[index];
-                  return ListTile(
-                    title: Text(scannedBook.book.title),
-                    subtitle: Text(scannedBook.book.authors.join(', ')),
-                  );
-                },
-              ),
-            ),
-          ],
-        ));
+        body: Center(
+      child: Column(
+        children: <Widget>[
+          SizedBox(
+            width: _screenWidth,
+            height: _screenWidth * 4 / 3,
+            child: ClipRect(
+                child: OverflowBox(
+                    alignment: Alignment.center,
+                    child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Container(
+                            width: _screenWidth,
+                            // Reflect vertically the Image.file(File(imagePath))
+                            child: Transform(
+                                alignment: Alignment.center,
+                                transform: Matrix4.rotationY(3.1415926535),
+                            child: Image.file(File(imagePath))))))),
+          ),
+          Expanded(
+              child: Container(
+            margin: const EdgeInsets.fromLTRB(0, 24, 0, 24),
+            child: BookCarousel(
+                books: scannedBooks
+                    .map((scannedBook) => scannedBook.book)
+                    .toList()),
+          ))
+        ],
+      ),
+    ));
   }
 }
+
+// Expanded(
+// child: ListView.builder(
+// itemCount: scannedBooks.length,
+// itemBuilder: (context, index) {
+// final BookScan scannedBook = scannedBooks[index];
+// return ListTile(
+// title: Text(scannedBook.book.title),
+// subtitle: Text(scannedBook.book.authors.join(', ')),
+// );
+// },
+// ),
+// ),
 
 class BoundingBoxPainter extends CustomPainter {
   final List<BookScan> scannedBooks;
