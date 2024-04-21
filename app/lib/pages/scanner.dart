@@ -132,31 +132,33 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
               children: [
                 // =======
                 Text("Take a picture of a self\nto scan the books.",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.montserrat(
-                        textStyle: const TextStyle(
-                            color: Color(0xFF560FA9),
-                            fontWeight: FontWeight.w600,
-                            fontSize: 22))),
-                // =======
-                Text("Your books will be\ndisplayed here soon ",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.montserrat(
-                        textStyle: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16))),
-                // =======
-                ElevatedButton(
-                  onPressed: scan,
-                  child: const Text('Take Picture'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    //Navigator.pushNamed(context, '/bookscanned');
-                  },
-                  child: const Text("REMOVE ESTE BOTÃO (TESTE)"),
-                )
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.montserrat(
+                          textStyle: const TextStyle(
+                              color: Color(0xFF560FA9),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 22))),
+                  // =======
+                  Text("Your books will be\ndisplayed here soon ",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.montserrat(
+                          textStyle: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16))),
+                  // =======
+                  ElevatedButton(
+                    onPressed: scan,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF560FA9),
+                    ),
+                    child: Text(
+                      'Scan',
+                      style: GoogleFonts.montserrat(
+                          textStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 22)
+                        )
+                    ),
+                  ),
               ]),
         )),
       ]),

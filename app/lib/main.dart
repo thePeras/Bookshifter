@@ -2,6 +2,7 @@ import 'package:app/pages/landing.dart';
 import 'package:app/pages/login.dart';
 import 'package:app/pages/scanner.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_better_camera/camera.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -13,6 +14,10 @@ void main() async {
   List<CameraDescription> cameras = await availableCameras();
 
   runApp(MyApp(camera: cameras.first));
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
 }
 
 class MyApp extends StatelessWidget {
