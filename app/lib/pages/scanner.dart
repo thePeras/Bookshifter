@@ -108,12 +108,11 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
               left: _screenWidth / 2 - 20,
               child: const CircularProgressIndicator(),
             ),
-          if (status != "") // Center text
-            Positioned(
-              top: _screenWidth * 4 / 3 / 2 - 50,
-              left: _screenWidth / 2 - status.length * 7.5,
-              child: Container(
-                width: 300, // Set a fixed width for positioning
+          if (status != "")
+            Positioned.fill( // Center text
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
                 child: Text(status,
                     textAlign: TextAlign.center, // Center text horizontally
                     style: GoogleFonts.montserrat(
@@ -123,6 +122,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
                             fontSize: 22))),
               ),
             )
+            )
         ]),
         Expanded(
             child: Container(
@@ -131,7 +131,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // =======
-                Text("Take a picture of a self\nto scan the books.",
+                Text("Take a picture of a shelf\nto scan the books.",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.montserrat(
                         textStyle: const TextStyle(
@@ -167,6 +167,16 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
 
   /// Display the preview from the camera (or a message if the preview is not available).
   Widget _cameraPreviewWidget() {
+    if(imagePath != null){
+      return AspectRatio(
+        aspectRatio: controller!.value.aspectRatio,
+        child: Image.file(File(imagePath!),
+          colorBlendMode: BlendMode.darken,
+          color: Colors.black54,
+        )
+      );
+    }
+
     if (controller == null || !controller!.value.isInitialized!) {
       return const Text(
         'Tap a camera',
@@ -269,11 +279,11 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
           String text = textInfo['DetectedText'];
           var bbox = textInfo['Geometry']['BoundingBox'];
 
-          if (bbox['Left'] > bookBbox['Left'] &&
-              bbox['Top'] > bookBbox['Top'] &&
-              bbox['Left'] + bbox['Width'] <
+          if (bbox['Left'] >= bookBbox['Left'] &&
+              bbox['Top'] >= bookBbox['Top'] &&
+              bbox['Left'] + bbox['Width'] <=
                   bookBbox['Left'] + bookBbox['Width'] &&
-              bbox['Top'] + bbox['Height'] <
+              bbox['Top'] + bbox['Height'] <=
                   bookBbox['Top'] + bookBbox['Height']) {
             bookTexts.add(text);
           }
@@ -291,7 +301,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
       isLoading = false;
       status = "";
     });
-    
+
     return createBookTextList(booksInstances, texts);
   }
 

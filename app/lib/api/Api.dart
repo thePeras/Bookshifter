@@ -33,6 +33,31 @@ class Api {
   }
 
   static Future<Book> getBook(String query) async {
+    
+    if(query.isEmpty){
+      return Book(
+        title: 'No book found',
+        subtitle: '',
+        authors: [],
+        publisher: '',
+        publishedDate: DateTime.now(),
+        rawPublishedDate: '',
+        description: '',
+        pageCount: 0,
+        categories: [],
+        averageRating: 0,
+        ratingsCount: 0,
+        maturityRating: '',
+        contentVersion: '',
+        industryIdentifier: [],
+        imageLinks: {
+          "thumbnail": Uri.parse(
+              "https://www.labfriend.co.in/static/assets/images/shared/default-image.png"),
+        },
+        language: '',
+      );
+    }
+
     var bookInfo = await books_finder.queryBooks(
       query,
       maxResults: 1,
@@ -64,6 +89,17 @@ class Api {
         language: '',
       );
     }
+
+    // Because google books api doesn't have this image
+    Uri? thumbnail = bookInfo[0].info.imageLinks["thumbnail"];
+    if(bookInfo[0].info.title == "Sob águas escuras") thumbnail = Uri.parse("https://img.wook.pt/images/aguas-profundas-robert-bryndza/MXwyMTI5NDgzNXwxNzE4MDU5MXwxNTE1NTgxNTQxMDAw/500x");
+    if(bookInfo[0].info.title == "Histórias para princesas") thumbnail = Uri.parse("https://static.fnac-static.com/multimedia/Images/PT/NR/b7/fa/04/326327/1540-6/tsp20160818163758/Historias-de-Princesas.jpg");
+    RegExp regex = RegExp(r'\b(bíblia|biblia)\b', caseSensitive: false);
+    if(regex.hasMatch(bookInfo[0].info.title)) thumbnail = Uri.parse("https://images-na.ssl-images-amazon.com/images/I/91kM77X%2BolL.jpg");
+
+    final Map<String, Uri> imageLinks = {};
+    if(thumbnail != null) imageLinks.addAll({"thumbnail": thumbnail});
+
     return Book(
       title: bookInfo[0].info.title,
       subtitle: bookInfo[0].info.subtitle,
@@ -79,7 +115,7 @@ class Api {
       maturityRating: bookInfo[0].info.maturityRating,
       contentVersion: bookInfo[0].info.contentVersion,
       industryIdentifier: bookInfo[0].info.industryIdentifiers,
-      imageLinks: bookInfo[0].info.imageLinks,
+      imageLinks: imageLinks,
       language: bookInfo[0].info.language,
     );
   }
