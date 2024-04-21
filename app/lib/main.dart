@@ -1,24 +1,22 @@
 import 'package:app/pages/landing.dart';
 import 'package:app/pages/login.dart';
 import 'package:app/pages/scanner.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_better_camera/camera.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-late List<CameraDescription> _cameras;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: ".env");
 
-  _cameras = await availableCameras();
+  List<CameraDescription> cameras = await availableCameras();
 
-  runApp(MyApp(camera: _cameras.first));
+  runApp(MyApp(camera: cameras.first));
 }
 
 class MyApp extends StatelessWidget {
   final CameraDescription camera;
-
   const MyApp({super.key, required this.camera});
 
   @override

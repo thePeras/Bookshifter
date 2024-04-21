@@ -48,19 +48,6 @@ class PreviewScreen extends StatelessWidget {
   }
 }
 
-// Expanded(
-// child: ListView.builder(
-// itemCount: scannedBooks.length,
-// itemBuilder: (context, index) {
-// final BookScan scannedBook = scannedBooks[index];
-// return ListTile(
-// title: Text(scannedBook.book.title),
-// subtitle: Text(scannedBook.book.authors.join(', ')),
-// );
-// },
-// ),
-// ),
-
 class BoundingBoxPainter extends CustomPainter {
   final List<BookScan> scannedBooks;
 
