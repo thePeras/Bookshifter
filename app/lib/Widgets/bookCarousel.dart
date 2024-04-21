@@ -31,10 +31,9 @@ class _BookCarouselState extends State<BookCarousel> {
         ..addRotate([-45.0 / 180, 0.0, 45.0 / 180])
         ..addTranslate(
             [const Offset(-200.0, 20.0), const Offset(0.0, 0.0), const Offset(200.0, 20.0)]),
-      itemWidth: 100.0,
-      itemHeight: 200.0,
+      itemWidth: 150.0,
+      itemHeight: 250.0,
       itemBuilder: (context, index) {
-        print(widget.books[index].imageLinks);
         return Cover(
           title: widget.books[index].title,
           author: widget.books[index].authors.join(', '),

@@ -14,30 +14,52 @@ class Cover extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
           width: 100,
+          height: null,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black12,
+                  offset: Offset(0, 2),
+                  blurRadius: 6,
+                ),
+              ],
+            ),
             child: Column(
               children: [
                 Image.network(
                   thumbnail,
-                  width: 100,
-                  height: 150,
+                  width: 150,
+                  height: 200,
                   fit: BoxFit.cover,
                 ),
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
+                Container(
+                  height: 15,
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                Text(
-                author,
-                style: const TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
+                Container(
+                  height: 25,
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Text(
+                    author,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: const TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                )
             ],
         ),
       );
