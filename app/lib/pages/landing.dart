@@ -1,8 +1,6 @@
-import 'package:app/Widgets/bookCarousel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});

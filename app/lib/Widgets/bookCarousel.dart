@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 
 class BookCarousel extends StatefulWidget {
-  int index;
   final List<Book> books;
-  BookCarousel({super.key, this.index = 0, required this.books});
+  final void Function(int) changeIndex;
+
+  const BookCarousel({super.key, required this.books, required this.changeIndex});
 
   @override
   State<BookCarousel> createState() => _BookCarouselState();
@@ -27,6 +28,9 @@ class _BookCarouselState extends State<BookCarousel> {
     }
 
     return Swiper(
+      onIndexChanged: (index) {
+        widget.changeIndex(index);
+      },
       layout: SwiperLayout.CUSTOM,
       customLayoutOption: CustomLayoutOption(startIndex: -1, stateCount: 3)
         ..addRotate([-45.0 / 180, 0.0, 45.0 / 180])

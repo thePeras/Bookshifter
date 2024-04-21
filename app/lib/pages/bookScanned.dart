@@ -160,11 +160,11 @@ class BookScannedPage extends StatelessWidget {
               },
             );
           },
+          backgroundColor: const Color(0xFF560FA9),
           child: const Icon(
               Icons.add, color:
-              const Color.fromARGB(255, 255, 255, 255)
+              Color.fromARGB(255, 255, 255, 255)
           ),
-          backgroundColor: const Color(0xFF560FA9),
         )
       )
     );

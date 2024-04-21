@@ -118,7 +118,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
                     textAlign: TextAlign.center, // Center text horizontally
                     style: GoogleFonts.montserrat(
                         textStyle: const TextStyle(
-                            color: Color(0xFF560FA9),
+                            color: Colors.white,
                             fontWeight: FontWeight.w600,
                             fontSize: 22))),
               ),
@@ -132,33 +132,33 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
               children: [
                 // =======
                 Text("Take a picture of a self\nto scan the books.",
-                      textAlign: TextAlign.center,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.montserrat(
+                        textStyle: const TextStyle(
+                            color: Color(0xFF560FA9),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 22))),
+                // =======
+                Text("Your books will be\ndisplayed here soon ",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.montserrat(
+                        textStyle: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16))),
+                // =======
+                ElevatedButton(
+                  onPressed: scan,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF560FA9),
+                  ),
+                  child: Text('Scan',
                       style: GoogleFonts.montserrat(
                           textStyle: const TextStyle(
-                              color: Color(0xFF560FA9),
+                              color: Colors.white,
                               fontWeight: FontWeight.w600,
                               fontSize: 22))),
-                  // =======
-                  Text("Your books will be\ndisplayed here soon ",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat(
-                          textStyle: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16))),
-                  // =======
-                  ElevatedButton(
-                    onPressed: scan,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF560FA9),
-                    ),
-                    child: Text(
-                      'Scan',
-                      style: GoogleFonts.montserrat(
-                          textStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 22)
-                        )
-                    ),
-                  ),
+                ),
               ]),
         )),
       ]),
@@ -257,6 +257,9 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
         List booksData, List textsData) async {
       List<BookScan> bookTextList = [];
 
+      booksData.sort((a, b) =>
+          a['BoundingBox']['Left'].compareTo(b['BoundingBox']['Left']));
+
       for (var bookInfo in booksData) {
         List<String> bookTexts = [];
 
@@ -275,9 +278,9 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
             bookTexts.add(text);
           }
         }
-        print("getting book");
         final Book book = await Api.getBook(bookTexts.join(' '));
-        print("book getted");
+        if(book.title == "No book found") continue;
+        
         bookTextList.add(BookScan(book, bookTexts, bookBbox));
       }
 

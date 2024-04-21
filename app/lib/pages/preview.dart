@@ -3,7 +3,7 @@ import 'package:app/Widgets/bookCarousel.dart';
 import 'package:app/model/BookScan.dart';
 import 'package:flutter/material.dart';
 
-class PreviewScreen extends StatelessWidget {
+class PreviewScreen extends StatefulWidget {
   final String imagePath;
   final List<BookScan> scannedBooks;
 
@@ -11,49 +11,73 @@ class PreviewScreen extends StatelessWidget {
       {super.key, required this.imagePath, required this.scannedBooks});
 
   @override
+  State<PreviewScreen> createState() => _PreviewScreenState();
+}
+
+class _PreviewScreenState extends State<PreviewScreen> {
+  late String imagePath;
+  late List<BookScan> scannedBooks;
+  int index = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    imagePath = widget.imagePath;
+    scannedBooks = widget.scannedBooks;
+  }
+
+  void changeIndex(int index) {
+    setState(() {
+      this.index = index;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      body:  Column(
-          children: <Widget>[
-            FittedBox(
-              child: SizedBox(
+      body: Column(
+        children: <Widget>[
+          FittedBox(
+            child: SizedBox(
                 width: screenWidth,
                 height: screenWidth * 4 / 3,
                 // child: Image.file(File(imagePath)),
                 child: CustomPaint(
-                    foregroundPainter: BoundingBoxPainter(scannedBooks),
-                    child: Image.file(File(imagePath)),
-                )
-            ),
+                  foregroundPainter: BoundingBoxPainter(scannedBooks, index),
+                  child: Image.file(File(imagePath)),
+                )),
           ),
           Expanded(
               child: Container(
             margin: const EdgeInsets.fromLTRB(0, 24, 0, 24),
-                child: BookCarousel(
-                    books: scannedBooks
-                        .map((scannedBook) => scannedBook.book)
-                        .toList()),
+            child: BookCarousel(
+                changeIndex: changeIndex,
+                books: scannedBooks
+                    .map((scannedBook) => scannedBook.book)
+                    .toList()),
           ))
-      ],
-    ),
+        ],
+      ),
     );
   }
 }
 
 class BoundingBoxPainter extends CustomPainter {
   final List<BookScan> scannedBooks;
+  final int index;
 
-  BoundingBoxPainter(this.scannedBooks);
+  BoundingBoxPainter(this.scannedBooks, this.index);
 
   @override
   void paint(Canvas canvas, Size size) async {
     final double scaleX = size.width;
     final double scaleY = size.height;
 
-    for (final book in scannedBooks) {
-      final Map<String, dynamic> boundingBox = book.boundingBox;
+    for (int i = 0; i < scannedBooks.length; i++) {
+
+      final Map<String, dynamic> boundingBox = scannedBooks[i].boundingBox;
 
       if (boundingBox.containsKey('Height') &&
           boundingBox.containsKey('Left') &&
@@ -66,10 +90,11 @@ class BoundingBoxPainter extends CustomPainter {
           boundingBox['Height']! * scaleY,
         );
 
+      
         final Paint paint = Paint()
-          ..color = Colors.white
+          ..color = i != index ? Colors.white : const Color(0xFF560FA9)
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 2;
+          ..strokeWidth = 3;
 
         canvas.drawRect(boundingRect, paint);
       }
