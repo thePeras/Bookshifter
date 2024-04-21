@@ -17,17 +17,18 @@ class PreviewScreen extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      body: Center(
-        child: Column(
+      body:  Column(
           children: <Widget>[
             FittedBox(
               child: SizedBox(
                 width: screenWidth,
                 height: screenWidth * 4 / 3,
+                // child: Image.file(File(imagePath)),
                 child: CustomPaint(
-                  painter: BoundingBoxPainter(imagePath, scannedBooks),
-                ),
-              ),
+                    foregroundPainter: BoundingBoxPainter(scannedBooks),
+                    child: Image.file(File(imagePath)),
+                )
+            ),
           ),
           Expanded(
               child: Container(
@@ -39,62 +40,46 @@ class PreviewScreen extends StatelessWidget {
           ))
       ],
     ),
-    ));
+    );
   }
 }
 
 class BoundingBoxPainter extends CustomPainter {
-  final String imagePath;
   final List<BookScan> scannedBooks;
 
-  BoundingBoxPainter(this.imagePath, this.scannedBooks);
+  BoundingBoxPainter(this.scannedBooks);
 
   @override
   void paint(Canvas canvas, Size size) async {
     final double scaleX = size.width;
     final double scaleY = size.height;
-    final ui.Image image = await loadImage(imagePath);
 
-    canvas.drawImage(image, Offset.zero, Paint());
-    /*for (final book in scannedBooks) {
+    for (final book in scannedBooks) {
       final Map<String, dynamic> boundingBox = book.boundingBox;
 
-      print(boundingBox);
-
-      if (boundingBox.containsKey('left') &&
-          boundingBox.containsKey('top') &&
-          boundingBox.containsKey('right') &&
-          boundingBox.containsKey('bottom')) {
-        final Rect boundingRect = Rect.fromLTRB(
-          boundingBox['left']! * scaleX,
-          boundingBox['top']! * scaleY,
-          boundingBox['right']! * scaleX,
-          boundingBox['bottom']! * scaleY,
+      if (boundingBox.containsKey('Height') &&
+          boundingBox.containsKey('Left') &&
+          boundingBox.containsKey('Top') &&
+          boundingBox.containsKey('Width')) {
+        final Rect boundingRect = Rect.fromLTWH(
+          boundingBox['Left']! * scaleX,
+          boundingBox['Top']! * scaleY,
+          boundingBox['Width']! * scaleX,
+          boundingBox['Height']! * scaleY,
         );
 
         final Paint paint = Paint()
-          ..color = Colors.transparent // Adjust as needed
+          ..color = Colors.white
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 2 // Adjust border width as needed
-          ..shader = const LinearGradient(
-            colors: [Colors.green, Colors.green],
-          ).createShader(boundingRect);
+          ..strokeWidth = 2;
 
         canvas.drawRect(boundingRect, paint);
       }
-    }*/
+    }
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
-  }
-
-  Future<ui.Image> loadImage(String imagePath) async {
-    final File imageFile = File(imagePath);
-    final Uint8List bytes = await imageFile.readAsBytes();
-    final ui.Codec codec = await ui.instantiateImageCodec(bytes);
-    final ui.Image image = (await codec.getNextFrame()).image;
-    return image;
+    return true;
   }
 }
