@@ -17,11 +17,9 @@ class _LandingPageState extends State<LandingPage> {
   final livros = [
     "assets/A_Ilha_do_Tesouro.jpg",
     "assets/A_Malnascida.jpg",
-    "assets/A_Ilha_do_Tesouro.jpg",
-    "assets/A_Ilha_do_Tesouro.jpg",
-    "assets/A_Ilha_do_Tesouro.jpg",
-    "assets/A_Ilha_do_Tesouro.jpg",
-    "assets/A_Ilha_do_Tesouro.jpg"
+    "assets/A_Viagem_do_Elefante.jpg",
+    "assets/Batalha_Incerta.jpg",
+    "assets/Esteiros.jpg",
   ];
 
   @override
