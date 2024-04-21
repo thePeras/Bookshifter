@@ -78,10 +78,9 @@ class BookScannedPage extends StatelessWidget {
                 Column(
                   children: [
                     Image.network(
-                      // (book.imageLinks["thumbnail"] == null)
-                      // ? book.imageLinks["thumbnail"].toString()
-                      // :
-                      "https://www.labfriend.co.in/static/assets/images/shared/default-image.png",
+                       book.imageLinks["thumbnail"] != null
+                       ? book.imageLinks["thumbnail"].toString()
+                       : "https://www.labfriend.co.in/static/assets/images/shared/default-image.png",
                       width: 170,
                     ),
                     Container(

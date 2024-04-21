@@ -111,7 +111,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
           if (status != "") // Center text
             Positioned(
               top: _screenWidth * 4 / 3 / 2 - 50,
-              left: _screenWidth / 2 - 50,
+              left: _screenWidth / 2 - status.length * 7.5,
               child: Container(
                 width: 300, // Set a fixed width for positioning
                 child: Text(status,
@@ -279,14 +279,19 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
           }
         }
         final Book book = await Api.getBook(bookTexts.join(' '));
-        if(book.title == "No book found") continue;
-        
+        if (book.title == "No book found") continue;
+
         bookTextList.add(BookScan(book, bookTexts, bookBbox));
       }
 
       return bookTextList;
     }
 
+    setState(() {
+      isLoading = false;
+      status = "";
+    });
+    
     return createBookTextList(booksInstances, texts);
   }
 

@@ -40,6 +40,7 @@ class _PreviewScreenState extends State<PreviewScreen> {
       body: Column(
         children: <Widget>[
           FittedBox(
+            fit: BoxFit.cover,
             child: SizedBox(
                 width: screenWidth,
                 height: screenWidth * 4 / 3,
