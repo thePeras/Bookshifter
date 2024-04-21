@@ -41,6 +41,7 @@ class Cover extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 5),
                   child: Text(
                     title,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
