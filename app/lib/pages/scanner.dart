@@ -200,7 +200,15 @@ class _ScannerPageState extends State<ScannerPage> {
                   // =======
                   ElevatedButton(
                     onPressed: scan,
-                    child: const Text('Take Picture'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF560FA9),
+                    ),
+                    child: Text(
+                      'Take Picture',
+                      style: GoogleFonts.montserrat(
+                          textStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 22)
+                        )
+                    ),
                   ),
                   ElevatedButton(
                     onPressed: () {

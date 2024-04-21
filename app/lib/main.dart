@@ -3,6 +3,7 @@ import 'package:app/pages/login.dart';
 import 'package:app/pages/scanner.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 late List<CameraDescription> _cameras;
 
@@ -13,6 +14,11 @@ void main() async {
 
   _cameras = await availableCameras();
 
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
   runApp(MyApp(camera: _cameras.first));
 }
 
