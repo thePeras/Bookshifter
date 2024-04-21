@@ -109,13 +109,8 @@ class _ScannerPageState extends State<ScannerPage> {
   void scan() async {
     setState(() => isLoading = true);
 
-    await controller.setFocusMode(FocusMode.locked);
-    await controller.setExposureMode(ExposureMode.locked);
-
     final XFile image = await controller.takePicture();
-
-    await controller.setFocusMode(FocusMode.auto);
-    await controller.setExposureMode(ExposureMode.auto);
+    //await controller.stopImageStream();
 
     List<BookScan> scannedBooks = await detectBooks(image.path);
 
@@ -212,7 +207,7 @@ class _ScannerPageState extends State<ScannerPage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/bookscanned');
+                      //Navigator.pushNamed(context, '/bookscanned');
                     },
                     child: const Text("REMOVE ESTE BOTÃO (TESTE)"),
                   )

@@ -4,21 +4,17 @@ class Cover extends StatelessWidget {
   final String title;
   final String author;
   final String thumbnail;
-  double incline;
 
-  Cover({
+  const Cover({
     super.key,
     required this.title,
     required this.author,
     required this.thumbnail,
-    this.incline = 0.0,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Transform.rotate(
-        angle: incline,
-         child: SizedBox(
+    return SizedBox(
           width: 100,
             child: Column(
               children: [
@@ -44,8 +40,7 @@ class Cover extends StatelessWidget {
               ),
             ],
         ),
-      )
-    );
+      );
   }
 
 }
