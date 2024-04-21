@@ -8,15 +8,15 @@ class BookScannedPage extends StatelessWidget {
   final Book book;
   const BookScannedPage({super.key, required this.book});
 
-  final String iconArrowUpSVG = "assets/arrow-up.svg";
+  final String iconArrowUpSVG = "assets/arrow-down.svg";
   final double arrowUpSize = 20;
-  
-  
 
   @override
   Widget build(BuildContext context) {
     final primeiros3autores = book.authors.sublist(0, (book.authors.length > 2) ? 3 : book.authors.length);
     /*  */
+    print(book.imageLinks["thumbnail"]);
+
     final autoresMapped =
       primeiros3autores.map(
         (autor) => Text(autor,
@@ -68,8 +68,8 @@ class BookScannedPage extends StatelessWidget {
         body: Center(
           child: Container(
             margin: const EdgeInsets.fromLTRB(24, 12, 24, 24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: ListView(
+              scrollDirection: Axis.vertical,
               children: <Widget>[
                 // =========================
                 // =========================
@@ -78,7 +78,10 @@ class BookScannedPage extends StatelessWidget {
                 Column(
                   children: [
                     Image.network(
-                      book.imageLinks["thumbnail"].toString(),
+                      // (book.imageLinks["thumbnail"] == null)
+                      // ? book.imageLinks["thumbnail"].toString()
+                      // :
+                      "https://www.labfriend.co.in/static/assets/images/shared/default-image.png",
                       width: 170,
                     ),
                     Container(
@@ -103,22 +106,66 @@ class BookScannedPage extends StatelessWidget {
                     ),
                   ]
                 ),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF560FA9),
-                  ),
-                  child: Text(
-                    'Add to Shelf',
-                    style: GoogleFonts.montserrat(
-                        textStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 22)
-                      )
-                  ),
-                ),
               ],
             ),
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  // make alert dialog height smaller
+                  insetPadding: const EdgeInsets.fromLTRB(24, 250, 24, 300),
+                  title: const Text('Choose a shelf'),
+                  content: Column(
+                    children: <Widget>[
+                      ListTile(
+                        title: const Text('Want to read'),
+                        onTap: () {
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Added to Want to read shelf'),
+                            ),
+                          );
+                        },
+                      ),
+                      ListTile(
+                        title: const Text('Reading'),
+                        onTap: () {
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Added to Reading shelf'),
+                            ),
+                          );
+                        },
+                      ),
+                      ListTile(
+                        title: const Text('Read'),
+                        onTap: () {
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Added to Read shelf'),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+          child: const Icon(
+              Icons.add, color:
+              const Color.fromARGB(255, 255, 255, 255)
+          ),
+          backgroundColor: const Color(0xFF560FA9),
+        )
       )
     );
   }

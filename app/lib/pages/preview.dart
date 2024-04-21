@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:ui' as ui;
-import 'dart:typed_data';
 import 'package:app/Widgets/bookCarousel.dart';
 import 'package:app/model/BookScan.dart';
 import 'package:flutter/material.dart';

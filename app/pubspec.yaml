@@ -88,7 +88,7 @@ flutter:
   assets:
     # SVGs
     - assets/logo-app.svg
-    - assets/arrow-up.svg
+    - assets/arrow-down.svg
     # JPGs
     - assets/scanner.jpg
         # Testar capas na landing
