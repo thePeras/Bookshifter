@@ -96,6 +96,7 @@ flutter:
     - assets/A_Malnascida.jpg
     - assets/A_Viagem_do_Elefante.jpg
     - assets/Batalha_Incerta.jpg
+    - assets/Esteiros.jpg
     # misc
     - assets/GoogleCreds.json
     - .env

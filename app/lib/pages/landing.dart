@@ -17,102 +17,125 @@ class _LandingPageState extends State<LandingPage> {
   final livros = [
     "assets/A_Ilha_do_Tesouro.jpg",
     "assets/A_Malnascida.jpg",
-    "assets/A_Ilha_do_Tesouro.jpg",
-    "assets/A_Ilha_do_Tesouro.jpg",
-    "assets/A_Ilha_do_Tesouro.jpg",
-    "assets/A_Ilha_do_Tesouro.jpg",
-    "assets/A_Ilha_do_Tesouro.jpg"
+    "assets/A_Viagem_do_Elefante.jpg",
+    "assets/Batalha_Incerta.jpg",
+    "assets/Esteiros.jpg",
   ];
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: Color(0xFFFFA500),
       // =========================
       // =========================
       // APPBAR
       // =========================
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(120),
+        child: Container(
+          padding: const EdgeInsets.only(bottom: 24),
+          decoration: const BoxDecoration(
+            color: Color(0xFF560FA9),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(36.0),
+              bottomRight: Radius.circular(36.0),
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children:<Widget>[
+              Text(
+                  "Welcome back, $nome!",
+                  style: GoogleFonts.montserrat(
+                    textStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 24)
+                  )
+                ),
+            ]
+          ),
+        )
+      ),
+      body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children:<Widget>[
+          children: <Widget> [
             Container(
-              margin: const EdgeInsets.only(bottom: 20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.only(left: 20),
-                    child: SvgPicture.asset(
-                      logoAppSVG,
-                      width: 50,
-                      height: 50,
-                      semanticsLabel: 'Bookshifter logo'
-                    )
+              margin: const EdgeInsets.fromLTRB(24, 32, 24, 32),
+              child: GestureDetector(
+                onTap: () => { Navigator.pushNamed(context, '/scanner') },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(36.0),
+                  child: const Image(image: AssetImage("assets/scanner.jpg"))
+                )
+              ),
+            ),
+
+            // =========================
+            // =========================
+            // LISTAS LIVROS
+            // =========================
+            Container(
+                padding: const EdgeInsets.only(top: 24),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(36.0),
+                    topRight: Radius.circular(36.0),
                   ),
-                  Container(
-                      margin: const EdgeInsets.only(left: 10),
+                ),
+                child: Column(
+                  children:<Widget>[
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 12),
                       child: Text(
-                        "Welcome back $nome!",
+                        "Recently Scanned",
                         style: GoogleFonts.montserrat(
                           textStyle: const TextStyle(color: Color(0xFF560FA9), fontWeight: FontWeight.w600, fontSize: 22)
                         )
                       )
-                  ),
-                ],
-              )
-            )
-          ]
-        )
-      ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            GestureDetector(
-              onTap: () => { Navigator.pushNamed(context, '/scanner') },
-              child: const Image(image: AssetImage("assets/scanner.jpg"))
-            ),
-            // =========================
-            // =========================
-            // LISTA LIVROS
-            // =========================
-            Container(
-              child: Column(
-                children:<Widget>[
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 12),
-                    child: Text(
-                      "Recently Scanned",
-                      style: GoogleFonts.montserrat(
-                        textStyle: const TextStyle(color: Color(0xFF560FA9), fontWeight: FontWeight.w600, fontSize: 22)
+                    ),
+                    Container(
+                      height: 150,
+                      margin: const EdgeInsets.fromLTRB(24, 0, 24, 60),
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: List.generate(livros.length, (int index) {
+                            return Container(
+                              margin: const EdgeInsets.only(right: 24),
+                              child: Image(image: AssetImage(livros[index]))
+                            );
+                          }
+                        )
+                      )
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 12),
+                      child: Text(
+                        "Sugestions",
+                        style: GoogleFonts.montserrat(
+                          textStyle: const TextStyle(color: Color(0xFF560FA9), fontWeight: FontWeight.w600, fontSize: 22)
+                        )
+                      )
+                    ),
+                    Container(
+                      height: 150,
+                      margin: const EdgeInsets.fromLTRB(24, 0, 24, 60),
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: List.generate(livros.length, (int index) {
+                            return Container(
+                              margin: const EdgeInsets.only(right: 24),
+                              child: Image(image: AssetImage(livros[index]))
+                            );
+                          }
+                        )
                       )
                     )
-                  ),
-                  Container(
-                    height: 150,
-                    margin: const EdgeInsets.fromLTRB(30, 0, 30, 60),
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: List.generate(livros.length, (int index) {
-                          return Container(
-                            margin: const EdgeInsets.only(right: 24),
-                            child: Image(image: AssetImage(livros[index]))
-                          );
-                        }
-                      )
-                    )
-                  )
-                ]
+                  ]
+                ),
               )
-            )
-            // =========================
-            // =========================
-            // LISTA LIVROS
-            // =========================
           ],
         ),
-      ),
+      )
     );
   }
 }
