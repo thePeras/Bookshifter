@@ -1,5 +1,5 @@
-import 'package:app/models/book.dart';
-import 'package:app/pages/bookScanned.dart';
+import 'package:app/model/book.dart';
+import 'package:app/pages/scanned_book.dart';
 import 'package:app/widgets/cover.dart';
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
@@ -40,7 +40,7 @@ class _BookCarouselState extends State<BookCarousel> {
       itemHeight: 250.0,
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => BookScannedPage(book: widget.books[index]))),
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ScannedBookPage(book: widget.books[index]))),
             child: Cover(
               title: widget.books[index].title,
               author: widget.books[index].authors.join(', '),

@@ -1,6 +1,5 @@
-Negocio:
-- Espaços que disponibilizam esta serviço conseguem meter os clientes bem direcionados nos livros que realmente querem e precisam de ler.
-
-Comercial digital pode ser um problema
-Diversidade dos livros / colecionadores
-a bertrhand a unica coisa que oferece é a eperiencia em loja
+- Negocio: Espaços que disponibilizam esta serviço conseguem meter os clientes bem direcionados nos livros que realmente querem e precisam de ler.
+- A experiencia em loja é muito importante para livrarias como a Bertrand
+- Diversidade dos livros é um fator positivo
+- Os colecionadores de livros podem ter interesse em ter uma aplicação que lhes permita gerir a sua coleção
+- Comercio digital pode levantar questões sobre a utilidade da plataforma

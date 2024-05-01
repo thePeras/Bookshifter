@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
-import 'Signature.dart';
+import 'signature.dart';
 
 class RekognitionHandler {
   late String _accessKey, _secretKey;

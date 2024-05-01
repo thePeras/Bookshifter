@@ -1,5 +1,5 @@
 import "package:books_finder/books_finder.dart" as books_finder;
-import 'package:app/models/book.dart';
+import 'package:app/model/book.dart';
 
 class Api {
   static Future<List<Book>> getBooks(String query) async {

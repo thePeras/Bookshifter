@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LandingPage extends StatefulWidget {
@@ -26,7 +25,7 @@ class _LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Color(0xFFFFA500),
+      backgroundColor: const Color(0xFFFFA500),
       // =========================
       // =========================
       // APPBAR
@@ -61,7 +60,7 @@ class _LandingPageState extends State<LandingPage> {
             Container(
               margin: const EdgeInsets.fromLTRB(24, 32, 24, 32),
               child: GestureDetector(
-                onTap: () => { Navigator.pushNamed(context, '/scanner') },
+                onTap: () => Navigator.pushNamed(context, '/scanner'),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(36.0),
                   child: const Image(image: AssetImage("assets/scanner.jpg"))

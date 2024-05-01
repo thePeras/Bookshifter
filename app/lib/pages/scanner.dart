@@ -1,30 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:app/api/Api.dart';
-import 'package:app/api/RekognitionHandler.dart';
-import 'package:app/model/BookScan.dart';
-import 'package:app/models/book.dart';
+import 'package:app/api/api.dart';
+import 'package:app/api/rekognition_handler.dart';
+import 'package:app/model/book.dart';
+import 'package:app/model/book_detection.dart';
 import 'package:flutter/material.dart';
 import 'package:app/pages/preview.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_better_camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
-
-/// Returns a suitable camera icon for [direction].
-IconData getCameraLensIcon(CameraLensDirection? direction) {
-  switch (direction) {
-    case CameraLensDirection.back:
-      return Icons.camera_rear;
-    case CameraLensDirection.front:
-      return Icons.camera_front;
-    case CameraLensDirection.external:
-      return Icons.camera;
-    case null:
-    // TODO: Handle this case.
-  }
-  throw ArgumentError('Unknown lens direction');
-}
 
 class ScannerPage extends StatefulWidget {
   final CameraDescription camera;
@@ -232,7 +217,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
     showInSnackBar('Error: ${e.code}\n${e.description}');
   }
 
-  Future<List<BookScan>> detectBooks(String srcImage) async {
+  Future<List<BookDetection>> detectBooks(String srcImage) async {
     File sourceImageFile = File(srcImage);
 
     Future<String> labelsArray = _rekognition.detectBooks(sourceImageFile);
@@ -263,9 +248,9 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
 
     print('Found ${texts.length} texts');
 
-    Future<List<BookScan>> createBookTextList(
+    Future<List<BookDetection>> createBookTextList(
         List booksData, List textsData) async {
-      List<BookScan> bookTextList = [];
+      List<BookDetection> bookTextList = [];
 
       booksData.sort((a, b) =>
           a['BoundingBox']['Left'].compareTo(b['BoundingBox']['Left']));
@@ -291,7 +276,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
         final Book book = await Api.getBook(bookTexts.join(' '));
         if (book.title == "No book found") continue;
 
-        bookTextList.add(BookScan(book, bookTexts, bookBbox));
+        bookTextList.add(BookDetection(book, bookTexts, bookBbox));
       }
 
       return bookTextList;
@@ -317,7 +302,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
       });
 
       if (filePath != null) showInSnackBar('Picture saved to $filePath');
-      List<BookScan> scannedBooks = await detectBooks(filePath!);
+      List<BookDetection> scannedBooks = await detectBooks(filePath!);
 
       setState(() {
         isLoading = false;
@@ -327,7 +312,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
         context,
         MaterialPageRoute(
           builder: (context) =>
-              PreviewScreen(imagePath: filePath, scannedBooks: scannedBooks),
+              PreviewPage(imagePath: filePath, scannedBooks: scannedBooks),
         ),
       );
     });

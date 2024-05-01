@@ -1,11 +1,11 @@
-import 'package:app/models/book.dart';
+import 'package:app/model/book.dart';
 
-class BookScan {
+class BookDetection {
   final Book book;
   final List<String> texts;
   final Map<String, dynamic> boundingBox;
 
-  BookScan(this.book, this.texts, this.boundingBox);
+  BookDetection(this.book, this.texts, this.boundingBox);
 
   @override
   String toString() {

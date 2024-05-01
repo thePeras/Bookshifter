@@ -1,12 +1,12 @@
-import 'package:app/models/book.dart';
+import 'package:app/model/book.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
-class BookScannedPage extends StatelessWidget {
+class ScannedBookPage extends StatelessWidget {
   final Book book;
-  const BookScannedPage({super.key, required this.book});
+  const ScannedBookPage({super.key, required this.book});
 
   final String iconArrowUpSVG = "assets/arrow-down.svg";
   final double arrowUpSize = 20;
@@ -14,8 +14,6 @@ class BookScannedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primeiros3autores = book.authors.sublist(0, (book.authors.length > 2) ? 3 : book.authors.length);
-    /*  */
-    print(book.imageLinks["thumbnail"]);
 
     final autoresMapped =
       primeiros3autores.map(

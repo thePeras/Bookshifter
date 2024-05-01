@@ -1,22 +1,22 @@
 import 'dart:io';
-import 'package:app/Widgets/bookCarousel.dart';
-import 'package:app/model/BookScan.dart';
+import 'package:app/widgets/carousel.dart';
+import 'package:app/model/book_detection.dart';
 import 'package:flutter/material.dart';
 
-class PreviewScreen extends StatefulWidget {
+class PreviewPage extends StatefulWidget {
   final String imagePath;
-  final List<BookScan> scannedBooks;
+  final List<BookDetection> scannedBooks;
 
-  const PreviewScreen(
+  const PreviewPage(
       {super.key, required this.imagePath, required this.scannedBooks});
 
   @override
-  State<PreviewScreen> createState() => _PreviewScreenState();
+  State<PreviewPage> createState() => _PreviewPageState();
 }
 
-class _PreviewScreenState extends State<PreviewScreen> {
+class _PreviewPageState extends State<PreviewPage> {
   late String imagePath;
-  late List<BookScan> scannedBooks;
+  late List<BookDetection> scannedBooks;
   int index = 0;
 
   @override
@@ -66,7 +66,7 @@ class _PreviewScreenState extends State<PreviewScreen> {
 }
 
 class BoundingBoxPainter extends CustomPainter {
-  final List<BookScan> scannedBooks;
+  final List<BookDetection> scannedBooks;
   final int index;
 
   BoundingBoxPainter(this.scannedBooks, this.index);
