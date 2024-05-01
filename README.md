@@ -12,3 +12,19 @@ BookShifter will revolutionize the physical browsing experience for both individ
 Our target audience includes individuals who value the tactile experience of exploring physical books, as well as bookstores and libraries seeking to enhance their customers' on-site experiences.
 
 Check our design on Figma [here](https://www.figma.com/file/vB4XwZ9UI6miahHxkWYCEH/Shift-Appens?type=design&node-id=61%3A3989&mode=design&t=UA3roWdBKbOvQAWy-1).
+
+
+# About the contest: Shift APPens
+
+# Team Members
+
+# Problem
+
+# Solution: BookShifter
+
+# Technologies
+
+# How to run the project
+
+# Designs -> Meter screenshots
+
