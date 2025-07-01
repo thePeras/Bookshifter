@@ -34,7 +34,7 @@ An immersive experience, allowing users to scan books and access their informati
 
 The full submitted description can be found [here](docs/taikai_description.md).
 
-<img src="./images/demo.gif" height="300"/>
+https://github.com/user-attachments/assets/8f0eaebf-80ca-4ddb-accd-30fc005432ec
 
 ## Technologies
 
